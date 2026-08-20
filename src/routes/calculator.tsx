@@ -66,8 +66,18 @@ const keys: Key[] = [
   { label: "=", action: "equals", kind: "equals" },
 ];
 
+function factorial(n: number): number {
+  if (n < 0 || !Number.isInteger(n)) return NaN;
+  let result = 1;
+  for (let i = 2; i <= n; i++) result *= i;
+  return result;
+}
+
 function evaluateExpression(raw: string): string {
-  const js = raw
+  // Handle factorial first (postfix, e.g. "5!" -> "factorial(5)")
+  let expr = raw.replace(/(\d+(?:\.\d+)?)!/g, "factorial($1)");
+
+  const js = expr
     .replace(/π|pi/g, "Math.PI")
     .replace(/\bE\b/g, "Math.E")
     .replace(/\be\b/g, "Math.E")
@@ -80,7 +90,7 @@ function evaluateExpression(raw: string): string {
     .replace(/\^/g, "**")
     .replace(/(\d+(?:\.\d+)?)%/g, "($1/100)");
 
-  if (!/^[0-9+\-*/(). MathPIEsqrtincoglw*]*$/.test(js.replace(/Math\.[a-z0-9]+/gi, ""))) {
+  if (!/^[0-9+\-*/(). MathPIEsqrtincoglwfactrial*]*$/.test(js.replace(/Math\.[a-z0-9]+/gi, ""))) {
     return "Error";
   }
 
@@ -92,6 +102,7 @@ function evaluateExpression(raw: string): string {
   } catch {
     return "Error";
   }
+}
 }
 
 const kindClass: Record<string, string> = {
