@@ -40,7 +40,7 @@ function ChatPage() {
     setInput("");
 
     let step = 0;
-    setStatus(toolStatuses[0]);
+    setStatus(toolStatuses[0]!);
     const timer = setInterval(() => {
       step += 1;
       if (step < toolStatuses.length) {

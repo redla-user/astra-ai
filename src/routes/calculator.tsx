@@ -18,7 +18,7 @@ export const Route = createFileRoute("/calculator")({
       },
     ],
   }),
-  component: CalculatorPage;
+  component: CalculatorPage,
 });
 
 type Key = { label: string; insert?: string; action?: "clear" | "back" | "equals"; kind?: string };
